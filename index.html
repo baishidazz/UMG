@@ -674,14 +674,14 @@
                         currentTimeEl.textContent = '0:00';
                     } else {
                         progressWidth += 0.5;
-                        progress.style.width = ${progressWidth}%;
+                        progress.style.width = `${progressWidth}%`;
                         
                         // 更新时间显示
                         const totalSeconds = 200; // 3分20秒
                         const currentSeconds = Math.floor(totalSeconds * progressWidth / 100);
                         const minutes = Math.floor(currentSeconds / 60);
                         const seconds = currentSeconds % 60;
-                        currentTimeEl.textContent = ${minutes}:${seconds < 10 ? '0' + seconds : seconds};
+                        currentTimeEl.textContent = `${minutes}:${seconds < 10 ? '0' + seconds : seconds}`;
                     }
                 }, 300);
             } else {
@@ -735,7 +735,7 @@
             const days = 30; // 一个月按30天计算
             const earnings = rate * minutes * days;
             
-            earningsResult.textContent = ¥${earnings.toFixed(0)};
+            earningsResult.textContent = `¥${earnings.toFixed(0)}`;
         }
         
         vipSelect.addEventListener('change', calculateEarnings);
@@ -745,4 +745,4 @@
         calculateEarnings();
     </script>
 </body>
-</html>        
+</html>
