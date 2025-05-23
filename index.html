@@ -13,6 +13,7 @@
             font-family: 'Poppins', sans-serif;
             background-color: #f8f9fa;
             color: #333;
+            scroll-behavior: smooth;
         }
         
         .gradient-bg {
@@ -138,11 +139,49 @@
             margin-right: 8px;
             vertical-align: middle;
         }
+        
+        /* Mobile menu styles */
+        .mobile-menu {
+            display: none;
+            position: fixed;
+            top: 80px;
+            left: 0;
+            right: 0;
+            background-color: white;
+            z-index: 1000;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+        }
+        
+        .mobile-menu.show {
+            display: block;
+        }
+        
+        .mobile-menu a {
+            display: block;
+            padding: 12px 20px;
+            color: #333;
+            text-decoration: none;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .mobile-menu a:hover {
+            background-color: #f9f9f9;
+        }
+
+        /* Language content */
+        .lang-en { display: none; }
+        .lang-zh { display: block; }
+        
+        body[lang="en-US"] .lang-en { display: block; }
+        body[lang="en-US"] .lang-zh { display: none; }
+        
+        body[lang="zh-CN"] .lang-zh { display: block; }
+        body[lang="zh-CN"] .lang-en { display: none; }
     </style>
 </head>
-<body>
+<body lang="zh-CN">
     <!-- 导航栏 -->
-    <nav class="gradient-bg text-white shadow-lg">
+    <nav class="gradient-bg text-white shadow-lg fixed w-full z-50">
         <div class="container mx-auto px-4 py-4">
             <div class="flex justify-between items-center">
                 <div class="flex items-center space-x-2">
@@ -150,19 +189,24 @@
                     <span class="text-xl font-bold">Universal Music</span>
                 </div>
                 <div class="hidden md:flex space-x-6">
-                    <a href="#" class="hover:text-gray-200 font-medium" data-i18n="home">Home</a>
-                    <a href="#how-it-works" class="hover:text-gray-200 font-medium" data-i18n="how_it_works">How It Works</a>
-                    <a href="#vip-levels" class="hover:text-gray-200 font-medium" data-i18n="vip_levels">VIP Levels</a>
-                    <a href="#testimonials" class="hover:text-gray-200 font-medium" data-i18n="testimonials">Testimonials</a>
+                    <a href="#home" class="hover:text-gray-200 font-medium lang-zh">首页</a>
+                    <a href="#home" class="hover:text-gray-200 font-medium lang-en">Home</a>
+                    <a href="#how-it-works" class="hover:text-gray-200 font-medium lang-zh">工作原理</a>
+                    <a href="#how-it-works" class="hover:text-gray-200 font-medium lang-en">How It Works</a>
+                    <a href="#vip-levels" class="hover:text-gray-200 font-medium lang-zh">VIP等级</a>
+                    <a href="#vip-levels" class="hover:text-gray-200 font-medium lang-en">VIP Levels</a>
+                    <a href="#testimonials" class="hover:text-gray-200 font-medium lang-zh">用户评价</a>
+                    <a href="#testimonials" class="hover:text-gray-200 font-medium lang-en">Testimonials</a>
                 </div>
                 <div class="flex items-center space-x-4">
                     <div class="language-selector">
-                        <button class="bg-white text-purple-600 px-3 py-1 rounded-full font-medium hover:bg-gray-100 transition flex items-center">
-                            <img src="https://flagcdn.com/w20/us.png" class="flag-icon" alt="English">
-                            <span>English</span>
+                        <button class="bg-white text-purple-600 px-3 py-1 rounded-full font-medium hover:bg-gray-100 transition flex items-center" id="language-btn">
+                            <img src="https://flagcdn.com/w20/cn.png" class="flag-icon" alt="中文">
+                            <span id="current-language" class="lang-zh">中文</span>
+                            <span id="current-language" class="lang-en">English</span>
                             <i class="fas fa-chevron-down ml-1 text-xs"></i>
                         </button>
-                        <div class="language-dropdown">
+                        <div class="language-dropdown" id="language-dropdown">
                             <a href="#" class="language-option" data-lang="zh-CN">
                                 <img src="https://flagcdn.com/w20/cn.png" class="flag-icon" alt="中文">
                                 中文
@@ -171,23 +215,21 @@
                                 <img src="https://flagcdn.com/w20/us.png" class="flag-icon" alt="English">
                                 English
                             </a>
-                            <a href="#" class="language-option" data-lang="vi-VN">
-                                <img src="https://flagcdn.com/w20/vn.png" class="flag-icon" alt="Tiếng Việt">
-                                Tiếng Việt
-                            </a>
-                            <a href="#" class="language-option" data-lang="ja-JP">
-                                <img src="https://flagcdn.com/w20/jp.png" class="flag-icon" alt="日本語">
-                                日本語
-                            </a>
                         </div>
                     </div>
-                    <button class="bg-white text-purple-600 px-4 py-2 rounded-full font-medium hover:bg-gray-100 transition" data-i18n="login">
+                    <a href="https://universalmusic.pro/" class="bg-white text-purple-600 px-4 py-2 rounded-full font-medium hover:bg-gray-100 transition lang-zh">
+                        登录
+                    </a>
+                    <a href="https://universalmusic.pro/" class="bg-white text-purple-600 px-4 py-2 rounded-full font-medium hover:bg-gray-100 transition lang-en">
                         Login
-                    </button>
-                    <button class="hidden md:block bg-purple-700 text-white px-4 py-2 rounded-full font-medium hover:bg-purple-800 transition" data-i18n="register">
+                    </a>
+                    <a href="https://universalmusic.pro/pages/register/index" class="hidden md:block bg-purple-700 text-white px-4 py-2 rounded-full font-medium hover:bg-purple-800 transition lang-zh">
+                        注册
+                    </a>
+                    <a href="https://universalmusic.pro/pages/register/index" class="hidden md:block bg-purple-700 text-white px-4 py-2 rounded-full font-medium hover:bg-purple-800 transition lang-en">
                         Register
-                    </button>
-                    <button class="md:hidden text-white">
+                    </a>
+                    <button class="md:hidden text-white" id="mobile-menu-btn">
                         <i class="fas fa-bars text-xl"></i>
                     </button>
                 </div>
@@ -195,17 +237,43 @@
         </div>
     </nav>
 
+    <!-- 移动端菜单 -->
+    <div class="mobile-menu" id="mobile-menu">
+        <a href="#home" class="hover:text-gray-200 lang-zh">首页</a>
+        <a href="#home" class="hover:text-gray-200 lang-en">Home</a>
+        <a href="#how-it-works" class="hover:text-gray-200 lang-zh">工作原理</a>
+        <a href="#how-it-works" class="hover:text-gray-200 lang-en">How It Works</a>
+        <a href="#vip-levels" class="hover:text-gray-200 lang-zh">VIP等级</a>
+        <a href="#vip-levels" class="hover:text-gray-200 lang-en">VIP Levels</a>
+        <a href="#testimonials" class="hover:text-gray-200 lang-zh">用户评价</a>
+        <a href="#testimonials" class="hover:text-gray-200 lang-en">Testimonials</a>
+        <a href="https://universalmusic.pro/pages/register/index" class="w-full text-left bg-purple-700 text-white px-4 py-3 font-medium hover:bg-purple-800 transition lang-zh">
+            注册
+        </a>
+        <a href="https://universalmusic.pro/pages/register/index" class="w-full text-left bg-purple-700 text-white px-4 py-3 font-medium hover:bg-purple-800 transition lang-en">
+            Register
+        </a>
+    </div>
+
     <!-- 英雄区域 -->
-    <section class="gradient-bg text-white py-20">
+    <section id="home" class="gradient-bg text-white pt-32 pb-20">
         <div class="container mx-auto px-4 flex flex-col md:flex-row items-center">
             <div class="md:w-1/2 mb-10 md:mb-0">
-                <h1 class="text-4xl md:text-5xl font-bold mb-6" data-i18n="hero_title">Earn Money While Listening to Your Favorite Music</h1>
-                <p class="text-xl mb-8" data-i18n="hero_subtitle">Just 30 minutes of music listening per day can earn you up to $100! Official partner of Universal Music Group.</p>
+                <h1 class="text-4xl md:text-5xl font-bold mb-6 lang-zh">边听音乐边赚钱</h1>
+                <h1 class="text-4xl md:text-5xl font-bold mb-6 lang-en">Earn Money While Listening to Your Favorite Music</h1>
+                <p class="text-xl mb-8 lang-zh">每天只需听30分钟音乐，最高可赚100美元！环球音乐集团官方合作伙伴。</p>
+                <p class="text-xl mb-8 lang-en">Just 30 minutes of music listening per day can earn you up to $100! Official partner of Universal Music Group.</p>
                 <div class="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4">
-                    <button class="bg-white text-purple-600 px-6 py-3 rounded-full font-bold hover:bg-gray-100 transition" data-i18n="get_started">
+                    <a href="https://universalmusic.pro/" class="bg-white text-purple-600 px-6 py-3 rounded-full font-bold hover:bg-gray-100 transition lang-zh">
+                        立即开始 <i class="fas fa-arrow-right ml-2"></i>
+                    </a>
+                    <a href="https://universalmusic.pro/" class="bg-white text-purple-600 px-6 py-3 rounded-full font-bold hover:bg-gray-100 transition lang-en">
                         Get Started <i class="fas fa-arrow-right ml-2"></i>
+                    </a>
+                    <button class="bg-transparent border-2 border-white text-white px-6 py-3 rounded-full font-bold hover:bg-white hover:text-purple-600 transition lang-zh">
+                        <i class="fas fa-play-circle mr-2"></i> 观看视频
                     </button>
-                    <button class="bg-transparent border-2 border-white text-white px-6 py-3 rounded-full font-bold hover:bg-white hover:text-purple-600 transition" data-i18n="watch_video">
+                    <button class="bg-transparent border-2 border-white text-white px-6 py-3 rounded-full font-bold hover:bg-white hover:text-purple-600 transition lang-en">
                         <i class="fas fa-play-circle mr-2"></i> Watch Video
                     </button>
                 </div>
@@ -216,7 +284,8 @@
                         <img src="https://randomuser.me/api/portraits/women/44.jpg" class="w-10 h-10 rounded-full border-2 border-white" alt="User">
                     </div>
                     <div class="ml-4">
-                        <p class="text-sm" data-i18n="users_joined">Over <span class="font-bold">12,345+</span> users joined</p>
+                        <p class="text-sm lang-zh">已有 <span class="font-bold">12,345+</span> 用户加入</p>
+                        <p class="text-sm lang-en">Over <span class="font-bold">12,345+</span> users joined</p>
                         <div class="flex">
                             <i class="fas fa-star text-yellow-300"></i>
                             <i class="fas fa-star text-yellow-300"></i>
@@ -230,8 +299,8 @@
             </div>
             <div class="md:w-1/2 flex justify-center">
                 <div class="relative">
-                    <img src="https://images.unsplash.com/photo-1511671782772-c97d3e27f8b2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" 
-                         class="w-full max-w-md rounded-xl shadow-2xl" alt="Earn while listening">
+                    <img src="https://images.unsplash.com/photo-1511671782772-c97d3e27f8b2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80"
+                          class="w-full max-w-md rounded-xl shadow-2xl" alt="Earn while listening">
                     <div class="absolute -bottom-6 -right-6 bg-white p-4 rounded-xl shadow-lg music-player w-64">
                         <div class="flex items-center mb-4">
                             <img src="https://i.scdn.co/image/ab67616d00001e02ff9ca10b55ce82ae553c8228" class="w-12 h-12 rounded" alt="Album cover">
@@ -255,7 +324,8 @@
                             <button class="text-gray-500 hover:text-purple-600"><i class="fas fa-step-forward"></i></button>
                         </div>
                         <div class="mt-4 text-center text-xs text-purple-600 font-bold">
-                            <i class="fas fa-coins mr-1"></i> <span data-i18n="earning_rate">Earning: $0.25/min</span>
+                            <i class="fas fa-coins mr-1"></i> <span class="lang-zh">收益: $0.25/分钟</span>
+                            <span class="lang-en">Earning: $0.25/min</span>
                         </div>
                     </div>
                 </div>
@@ -266,7 +336,8 @@
     <!-- 合作伙伴 -->
     <section class="py-12 bg-gray-50">
         <div class="container mx-auto px-4">
-            <p class="text-center text-gray-500 mb-8" data-i18n="partners_title">Official Partner of Universal Music Group</p>
+            <p class="text-center text-gray-500 mb-8 lang-zh">环球音乐集团官方合作伙伴</p>
+            <p class="text-center text-gray-500 mb-8 lang-en">Official Partner of Universal Music Group</p>
             <div class="flex flex-wrap justify-center items-center gap-8 md:gap-16">
                 <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/84/Universal_Music_Group_logo.svg/2560px-Universal_Music_Group_logo.svg.png" class="h-8 opacity-70" alt="Universal Music">
                 <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/19/Spotify_logo_without_text.svg/1024px-Spotify_logo_without_text.svg.png" class="h-8 opacity-70" alt="Spotify">
@@ -281,30 +352,38 @@
     <section id="how-it-works" class="py-20 bg-white">
         <div class="container mx-auto px-4">
             <div class="text-center mb-16">
-                <h2 class="text-3xl font-bold mb-4" data-i18n="how_it_works_title">Earn Money in 3 Simple Steps</h2>
-                <p class="text-gray-600 max-w-2xl mx-auto" data-i18n="how_it_works_subtitle">Universal Music partners with artists to share advertising revenue with you while you listen to music</p>
+                <h2 class="text-3xl font-bold mb-4 lang-zh">3个简单步骤即可赚钱</h2>
+                <h2 class="text-3xl font-bold mb-4 lang-en">Earn Money in 3 Simple Steps</h2>
+                <p class="text-gray-600 max-w-2xl mx-auto lang-zh">环球音乐与艺术家合作，在您听音乐的同时与您分享广告收入</p>
+                <p class="text-gray-600 max-w-2xl mx-auto lang-en">Universal Music partners with artists to share advertising revenue with you while you listen to music</p>
             </div>
             <div class="grid md:grid-cols-3 gap-8">
                 <div class="bg-gray-50 p-8 rounded-xl text-center">
                     <div class="bg-purple-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-6">
                         <i class="fas fa-user-plus text-purple-600 text-2xl"></i>
                     </div>
-                    <h3 class="text-xl font-bold mb-3" data-i18n="step1_title">1. Create Account</h3>
-                    <p class="text-gray-600" data-i18n="step1_description">Quick registration, no complex verification, start your music earning journey immediately</p>
+                    <h3 class="text-xl font-bold mb-3 lang-zh">1. 创建账户</h3>
+                    <h3 class="text-xl font-bold mb-3 lang-en">1. Create Account</h3>
+                    <p class="text-gray-600 lang-zh">快速注册，无需复杂验证，立即开始您的音乐赚钱之旅</p>
+                    <p class="text-gray-600 lang-en">Quick registration, no complex verification, start your music earning journey immediately</p>
                 </div>
                 <div class="bg-gray-50 p-8 rounded-xl text-center">
                     <div class="bg-purple-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-6">
                         <i class="fas fa-headphones text-purple-600 text-2xl"></i>
                     </div>
-                    <h3 class="text-xl font-bold mb-3" data-i18n="step2_title">2. Choose VIP Level</h3>
-                    <p class="text-gray-600" data-i18n="step2_description">Select VIP level based on your budget, higher levels offer greater earning rates</p>
+                    <h3 class="text-xl font-bold mb-3 lang-zh">2. 选择VIP等级</h3>
+                    <h3 class="text-xl font-bold mb-3 lang-en">2. Choose VIP Level</h3>
+                    <p class="text-gray-600 lang-zh">根据您的预算选择VIP等级，等级越高收益越高</p>
+                    <p class="text-gray-600 lang-en">Select VIP level based on your budget, higher levels offer greater earning rates</p>
                 </div>
                 <div class="bg-gray-50 p-8 rounded-xl text-center">
                     <div class="bg-purple-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-6">
                         <i class="fas fa-coins text-purple-600 text-2xl"></i>
                     </div>
-                    <h3 class="text-xl font-bold mb-3" data-i18n="step3_title">3. Listen & Earn</h3>
-                    <p class="text-gray-600" data-i18n="step3_description">Listen to music for 30 minutes daily, earn easily, withdraw anytime</p>
+                    <h3 class="text-xl font-bold mb-3 lang-zh">3. 听歌赚钱</h3>
+                    <h3 class="text-xl font-bold mb-3 lang-en">3. Listen & Earn</h3>
+                    <p class="text-gray-600 lang-zh">每天听30分钟音乐，轻松赚钱，随时提现</p>
+                    <p class="text-gray-600 lang-en">Listen to music for 30 minutes daily, earn easily, withdraw anytime</p>
                 </div>
             </div>
         </div>
@@ -314,8 +393,10 @@
     <section id="vip-levels" class="py-20 bg-gray-50">
         <div class="container mx-auto px-4">
             <div class="text-center mb-16">
-                <h2 class="text-3xl font-bold mb-4" data-i18n="vip_levels_title">Choose Your VIP Level</h2>
-                <p class="text-gray-600 max-w-2xl mx-auto" data-i18n="vip_levels_subtitle">Upgrade VIP level to significantly increase your earning rate and enjoy more privileges</p>
+                <h2 class="text-3xl font-bold mb-4 lang-zh">选择您的VIP等级</h2>
+                <h2 class="text-3xl font-bold mb-4 lang-en">Choose Your VIP Level</h2>
+                <p class="text-gray-600 max-w-2xl mx-auto lang-zh">升级VIP等级可显著提高您的收益率并享受更多特权</p>
+                <p class="text-gray-600 max-w-2xl mx-auto lang-en">Upgrade VIP level to significantly increase your earning rate and enjoy more privileges</p>
             </div>
             <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
                 <!-- VIP1 -->
@@ -324,9 +405,11 @@
                         <div class="flex justify-between items-start mb-4">
                             <div>
                                 <h3 class="text-xl font-bold">VIP1</h3>
-                                <p class="text-gray-500" data-i18n="vip1_level">Starter</p>
+                                <p class="text-gray-500 lang-zh">入门级</p>
+                                <p class="text-gray-500 lang-en">Starter</p>
                             </div>
-                            <span class="bg-gray-200 text-gray-800 px-3 py-1 rounded-full text-xs font-bold" data-i18n="recommended">Recommended</span>
+                            <span class="bg-gray-200 text-gray-800 px-3 py-1 rounded-full text-xs font-bold lang-zh">推荐</span>
+                            <span class="bg-gray-200 text-gray-800 px-3 py-1 rounded-full text-xs font-bold lang-en">Recommended</span>
                         </div>
                         <div class="mb-6">
                             <span class="text-3xl font-bold">$10+</span>
@@ -334,26 +417,34 @@
                         <ul class="space-y-3 mb-8">
                             <li class="flex items-center">
                                 <i class="fas fa-check-circle text-green-500 mr-2"></i>
-                                <span data-i18n="vip1_return">Earning rate: 1% - 3%</span>
+                                <span class="lang-zh">收益率: 1% - 3%</span>
+                                <span class="lang-en">Earning rate: 1% - 3%</span>
                             </li>
                             <li class="flex items-center">
                                 <i class="fas fa-check-circle text-green-500 mr-2"></i>
-                                <span data-i18n="daily_tasks">Daily task limit: 20</span>
+                                <span class="lang-zh">每日任务限制: 20</span>
+                                <span class="lang-en">Daily task limit: 20</span>
                             </li>
                             <li class="flex items-center">
                                 <i class="fas fa-check-circle text-green-500 mr-2"></i>
-                                <span data-i18n="auto_return">Automatic return of principal and earnings</span>
+                                <span class="lang-zh">自动返还本金和收益</span>
+                                <span class="lang-en">Automatic return of principal and earnings</span>
                             </li>
                             <li class="flex items-center">
                                 <i class="fas fa-check-circle text-green-500 mr-2"></i>
-                                <span data-i18n="basic_library">Basic music library</span>
+                                <span class="lang-zh">基础音乐库</span>
+                                <span class="lang-en">Basic music library</span>
                             </li>
                             <li class="flex items-center text-gray-400">
                                 <i class="fas fa-times-circle mr-2"></i>
-                                <span data-i18n="no_support">No dedicated support</span>
+                                <span class="lang-zh">无专属支持</span>
+                                <span class="lang-en">No dedicated support</span>
                             </li>
                         </ul>
-                        <button class="w-full bg-gray-200 text-gray-800 py-3 rounded-lg font-bold hover:bg-gray-300 transition" data-i18n="choose_vip1">
+                        <button class="w-full bg-gray-200 text-gray-800 py-3 rounded-lg font-bold hover:bg-gray-300 transition lang-zh">
+                            选择VIP1
+                        </button>
+                        <button class="w-full bg-gray-200 text-gray-800 py-3 rounded-lg font-bold hover:bg-gray-300 transition lang-en">
                             Choose VIP1
                         </button>
                     </div>
@@ -365,36 +456,44 @@
                         <div class="flex justify-between items-start mb-4">
                             <div>
                                 <h3 class="text-xl font-bold">VIP2</h3>
-                                <p class="text-gray-500" data-i18n="vip2_level">Advanced</p>
+                                <p class="text-gray-500 lang-zh">基础级</p>
+                                <p class="text-gray-500 lang-en">Basic</p>
                             </div>
-                            <span class="bg-green-100 text-green-800 px-3 py-1 rounded-full text-xs font-bold" data-i18n="great_value">Great Value</span>
                         </div>
                         <div class="mb-6">
-                            <span class="text-3xl font-bold">$1000.01+</span>
+                            <span class="text-3xl font-bold">$50+</span>
                         </div>
                         <ul class="space-y-3 mb-8">
                             <li class="flex items-center">
                                 <i class="fas fa-check-circle text-green-500 mr-2"></i>
-                                <span data-i18n="vip2_return">Earning rate: 2% - 4%</span>
+                                <span class="lang-zh">收益率: 3% - 5%</span>
+                                <span class="lang-en">Earning rate: 3% - 5%</span>
                             </li>
                             <li class="flex items-center">
                                 <i class="fas fa-check-circle text-green-500 mr-2"></i>
-                                <span data-i18n="daily_tasks">Daily task limit: 20</span>
+                                <span class="lang-zh">每日任务限制: 50</span>
+                                <span class="lang-en">Daily task limit: 50</span>
                             </li>
                             <li class="flex items-center">
                                 <i class="fas fa-check-circle text-green-500 mr-2"></i>
-                                <span data-i18n="auto_return">Automatic return of principal and earnings</span>
+                                <span class="lang-zh">自动返还本金和收益</span>
+                                <span class="lang-en">Automatic return of principal and earnings</span>
                             </li>
                             <li class="flex items-center">
                                 <i class="fas fa-check-circle text-green-500 mr-2"></i>
-                                <span data-i18n="extended_library">Extended music library</span>
+                                <span class="lang-zh">基础音乐库</span>
+                                <span class="lang-en">Basic music library</span>
                             </li>
                             <li class="flex items-center">
                                 <i class="fas fa-check-circle text-green-500 mr-2"></i>
-                                <span data-i18n="priority_support">Priority support</span>
+                                <span class="lang-zh">邮件支持</span>
+                                <span class="lang-en">Email support</span>
                             </li>
                         </ul>
-                        <button class="w-full bg-green-600 text-white py-3 rounded-lg font-bold hover:bg-green-700 transition" data-i18n="choose_vip2">
+                        <button class="w-full bg-green-500 text-white py-3 rounded-lg font-bold hover:bg-green-600 transition lang-zh">
+                            选择VIP2
+                        </button>
+                        <button class="w-full bg-green-500 text-white py-3 rounded-lg font-bold hover:bg-green-600 transition lang-en">
                             Choose VIP2
                         </button>
                     </div>
@@ -406,37 +505,44 @@
                         <div class="flex justify-between items-start mb-4">
                             <div>
                                 <h3 class="text-xl font-bold">VIP3</h3>
-                                <p class="text-gray-500" data-i18n="vip3_level">Professional</p>
+                                <p class="text-gray-500 lang-zh">高级</p>
+                                <p class="text-gray-500 lang-en">Premium</p>
                             </div>
-                            <span class="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-xs font-bold" data-i18n="popular">Popular</span>
                         </div>
                         <div class="mb-6">
-                            <span class="text-3xl font-bold">$3000+</span>
-                            <span class="text-sm text-gray-500 block" data-i18n="team_required">+10 team members</span>
+                            <span class="text-3xl font-bold">$100+</span>
                         </div>
                         <ul class="space-y-3 mb-8">
                             <li class="flex items-center">
                                 <i class="fas fa-check-circle text-green-500 mr-2"></i>
-                                <span data-i18n="vip3_return">Earning rate: 3% - 5%</span>
+                                <span class="lang-zh">收益率: 5% - 8%</span>
+                                <span class="lang-en">Earning rate: 5% - 8%</span>
                             </li>
                             <li class="flex items-center">
                                 <i class="fas fa-check-circle text-green-500 mr-2"></i>
-                                <span data-i18n="daily_tasks">Daily task limit: 20</span>
+                                <span class="lang-zh">每日任务限制: 100</span>
+                                <span class="lang-en">Daily task limit: 100</span>
                             </li>
                             <li class="flex items-center">
                                 <i class="fas fa-check-circle text-green-500 mr-2"></i>
-                                <span data-i18n="auto_return">Automatic return of principal and earnings</span>
+                                <span class="lang-zh">自动返还本金和收益</span>
+                                <span class="lang-en">Automatic return of principal and earnings</span>
                             </li>
                             <li class="flex items-center">
                                 <i class="fas fa-check-circle text-green-500 mr-2"></i>
-                                <span data-i18n="premium_library">Premium music library</span>
+                                <span class="lang-zh">高级音乐库</span>
+                                <span class="lang-en">Premium music library</span>
                             </li>
                             <li class="flex items-center">
                                 <i class="fas fa-check-circle text-green-500 mr-2"></i>
-                                <span data-i18n="dedicated_support">Dedicated support</span>
+                                <span class="lang-zh">优先邮件支持</span>
+                                <span class="lang-en">Priority email support</span>
                             </li>
                         </ul>
-                        <button class="w-full bg-blue-600 text-white py-3 rounded-lg font-bold hover:bg-blue-700 transition" data-i18n="choose_vip3">
+                        <button class="w-full bg-blue-500 text-white py-3 rounded-lg font-bold hover:bg-blue-600 transition lang-zh">
+                            选择VIP3
+                        </button>
+                        <button class="w-full bg-blue-500 text-white py-3 rounded-lg font-bold hover:bg-blue-600 transition lang-en">
                             Choose VIP3
                         </button>
                     </div>
@@ -448,68 +554,49 @@
                         <div class="flex justify-between items-start mb-4">
                             <div>
                                 <h3 class="text-xl font-bold">VIP4</h3>
-                                <p class="text-gray-500" data-i18n="vip4_level">Exclusive</p>
+                                <p class="text-gray-500 lang-zh">专属级</p>
+                                <p class="text-gray-500 lang-en">Exclusive</p>
                             </div>
-                            <span class="bg-yellow-100 text-yellow-800 px-3 py-1 rounded-full text-xs font-bold" data-i18n="exclusive">Exclusive</span>
+                            <span class="bg-yellow-100 text-yellow-800 px-3 py-1 rounded-full text-xs font-bold lang-zh">热门</span>
+                            <span class="bg-yellow-100 text-yellow-800 px-3 py-1 rounded-full text-xs font-bold lang-en">Popular</span>
                         </div>
                         <div class="mb-6">
-                            <span class="text-3xl font-bold">$10000.01+</span>
-                            <span class="text-sm text-gray-500 block" data-i18n="team_required">+50 team members</span>
+                            <span class="text-3xl font-bold">$500+</span>
                         </div>
                         <ul class="space-y-3 mb-8">
                             <li class="flex items-center">
                                 <i class="fas fa-check-circle text-green-500 mr-2"></i>
-                                <span data-i18n="vip4_return">Earning rate: 4% - 6%</span>
+                                <span class="lang-zh">收益率: 8% - 12%</span>
+                                <span class="lang-en">Earning rate: 8% - 12%</span>
                             </li>
                             <li class="flex items-center">
                                 <i class="fas fa-check-circle text-green-500 mr-2"></i>
-                                <span data-i18n="daily_tasks">Daily task limit: 20</span>
+                                <span class="lang-zh">无限制每日任务</span>
+                                <span class="lang-en">Unlimited daily tasks</span>
                             </li>
                             <li class="flex items-center">
                                 <i class="fas fa-check-circle text-green-500 mr-2"></i>
-                                <span data-i18n="auto_return">Automatic return of principal and earnings</span>
+                                <span class="lang-zh">自动返还本金和收益</span>
+                                <span class="lang-en">Automatic return of principal and earnings</span>
                             </li>
                             <li class="flex items-center">
                                 <i class="fas fa-check-circle text-green-500 mr-2"></i>
-                                <span data-i18n="platinum_library">Platinum music library</span>
+                                <span class="lang-zh">专属音乐库</span>
+                                <span class="lang-en">Exclusive music library</span>
                             </li>
                             <li class="flex items-center">
                                 <i class="fas fa-check-circle text-green-500 mr-2"></i>
-                                <span data-i18n="24h_support">24/7 dedicated support</span>
+                                <span class="lang-zh">专属24/7支持</span>
+                                <span class="lang-en">Dedicated 24/7 support</span>
                             </li>
                         </ul>
-                        <button class="w-full bg-yellow-500 text-white py-3 rounded-lg font-bold hover:bg-yellow-600 transition" data-i18n="choose_vip4">
+                        <button class="w-full bg-yellow-500 text-white py-3 rounded-lg font-bold hover:bg-yellow-600 transition lang-zh">
+                            选择VIP4
+                        </button>
+                        <button class="w-full bg-yellow-500 text-white py-3 rounded-lg font-bold hover:bg-yellow-600 transition lang-en">
                             Choose VIP4
                         </button>
                     </div>
-                </div>
-            </div>
-            
-            <div class="mt-12 bg-white rounded-xl p-8 shadow-md">
-                <h3 class="text-xl font-bold mb-4" data-i18n="earnings_calculator">Earnings Calculator</h3>
-                <div class="grid md:grid-cols-3 gap-6">
-                    <div>
-                        <label class="block text-gray-700 mb-2" data-i18n="select_vip_level">Select VIP Level</label>
-                        <select id="vip-select" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-600 focus:border-transparent">
-                            <option value="0.02">VIP1 ($10+)</option>
-                            <option value="0.03">VIP2 ($1000.01+)</option>
-                            <option value="0.04">VIP3 ($3000+)</option>
-                            <option value="0.05">VIP4 ($10000.01+)</option>
-                        </select>
-                    </div>
-                    <div>
-                        <label class="block text-gray-700 mb-2" data-i18n="daily_investment">Daily Investment (USD)</label>
-                        <input id="investment-input" type="number" min="10" value="100" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-600 focus:border-transparent">
-                    </div>
-                    <div>
-                        <label class="block text-gray-700 mb-2" data-i18n="estimated_earnings">Estimated Monthly Earnings</label>
-                        <div id="earnings-result" class="bg-purple-100 text-purple-800 p-3 rounded-lg font-bold text-xl">
-                            $60
-                        </div>
-                    </div>
-                </div>
-                <div class="mt-6 bg-gray-100 p-4 rounded-lg">
-                    <p class="text-sm text-gray-700" data-i18n="calculator_note">* Calculation results are for reference only. Actual earnings may fluctuate due to market conditions. Universal Music does not guarantee minimum earnings.</p>
                 </div>
             </div>
         </div>
@@ -519,15 +606,17 @@
     <section id="testimonials" class="py-20 bg-white">
         <div class="container mx-auto px-4">
             <div class="text-center mb-16">
-                <h2 class="text-3xl font-bold mb-4" data-i18n="testimonials_title">User Testimonials</h2>
-                <p class="text-gray-600 max-w-2xl mx-auto" data-i18n="testimonials_subtitle">See how our users are changing their lives with Universal Music</p>
+                <h2 class="text-3xl font-bold mb-4 lang-zh">用户评价</h2>
+                <h2 class="text-3xl font-bold mb-4 lang-en">What Our Users Say</h2>
+                <p class="text-gray-600 max-w-2xl mx-auto lang-zh">加入数千名在享受音乐的同时赚钱的快乐用户</p>
+                <p class="text-gray-600 max-w-2xl mx-auto lang-en">Join thousands of happy users earning money while enjoying music</p>
             </div>
             <div class="grid md:grid-cols-3 gap-8">
                 <div class="bg-gray-50 p-8 rounded-xl">
-                    <div class="flex items-center mb-4">
-                        <img src="https://randomuser.me/api/portraits/women/32.jpg" class="w-12 h-12 rounded-full mr-4" alt="User">
-                        <div>
-                            <h4 class="font-bold" data-i18n="user1_name">Ms. Li</h4>
+                    <div class="flex items-center mb-6">
+                        <img src="https://randomuser.me/api/portraits/women/32.jpg" class="w-12 h-12 rounded-full" alt="User">
+                        <div class="ml-4">
+                            <h4 class="font-bold">Sarah Johnson</h4>
                             <div class="flex text-yellow-400">
                                 <i class="fas fa-star"></i>
                                 <i class="fas fa-star"></i>
@@ -537,17 +626,14 @@
                             </div>
                         </div>
                     </div>
-                    <p class="text-gray-600 mb-4" data-i18n="user1_review">"As a VIP3 user, I listen to music for 90 minutes daily and earn about $1600 per month, which completely covers my commuting expenses!"</p>
-                    <div class="flex items-center text-sm text-gray-500">
-                        <i class="fas fa-clock mr-2"></i>
-                        <span data-i18n="user1_date">June 15, 2023</span>
-                    </div>
+                    <p class="text-gray-600 lang-zh">"我仅仅2个月就赚了500多美元，听的是我喜欢的音乐。提现过程超级快！"</p>
+                    <p class="text-gray-600 lang-en">"I've earned over $500 in just 2 months by listening to music I love. The withdrawal process is super fast!"</p>
                 </div>
                 <div class="bg-gray-50 p-8 rounded-xl">
-                    <div class="flex items-center mb-4">
-                        <img src="https://randomuser.me/api/portraits/men/45.jpg" class="w-12 h-12 rounded-full mr-4" alt="User">
-                        <div>
-                            <h4 class="font-bold" data-i18n="user2_name">Mr. Wang</h4>
+                    <div class="flex items-center mb-6">
+                        <img src="https://randomuser.me/api/portraits/men/45.jpg" class="w-12 h-12 rounded-full" alt="User">
+                        <div class="ml-4">
+                            <h4 class="font-bold">Michael Chen</h4>
                             <div class="flex text-yellow-400">
                                 <i class="fas fa-star"></i>
                                 <i class="fas fa-star"></i>
@@ -557,17 +643,14 @@
                             </div>
                         </div>
                     </div>
-                    <p class="text-gray-600 mb-4" data-i18n="user2_review">"After upgrading to VIP4, my earnings increased significantly. Now I listen to music for 2 hours daily and earn over $3000 monthly - incredible!"</p>
-                    <div class="flex items-center text-sm text-gray-500">
-                        <i class="fas fa-clock mr-2"></i>
-                        <span data-i18n="user2_date">May 28, 2023</span>
-                    </div>
+                    <p class="text-gray-600 lang-zh">"升级到VIP3后，我的收益翻倍了。高级音乐选择也非常棒。"</p>
+                    <p class="text-gray-600 lang-en">"Upgraded to VIP3 and my earnings doubled. The premium music selection is amazing too."</p>
                 </div>
                 <div class="bg-gray-50 p-8 rounded-xl">
-                    <div class="flex items-center mb-4">
-                        <img src="https://randomuser.me/api/portraits/women/67.jpg" class="w-12 h-12 rounded-full mr-4" alt="User">
-                        <div>
-                            <h4 class="font-bold" data-i18n="user3_name">Ms. Zhang</h4>
+                    <div class="flex items-center mb-6">
+                        <img src="https://randomuser.me/api/portraits/women/67.jpg" class="w-12 h-12 rounded-full" alt="User">
+                        <div class="ml-4">
+                            <h4 class="font-bold">Emma Wilson</h4>
                             <div class="flex text-yellow-400">
                                 <i class="fas fa-star"></i>
                                 <i class="fas fa-star"></i>
@@ -577,11 +660,8 @@
                             </div>
                         </div>
                     </div>
-                    <p class="text-gray-600 mb-4" data-i18n="user3_review">"As a music lover, being able to earn while listening to my favorite songs is amazing. VIP2 offers great value for money - highly recommended to all music fans!"</p>
-                    <div class="flex items-center text-sm text-gray-500">
-                        <i class="fas fa-clock mr-2"></i>
-                        <span data-i18n="user3_date">July 3, 2023</span>
-                    </div>
+                    <p class="text-gray-600 lang-zh">"对学生来说太完美了！我一边学习一边听音乐，同时还能赚钱。上个月提现了200美元。"</p>
+                    <p class="text-gray-600 lang-en">"Perfect for students! I listen while studying and earn money at the same time. Withdrew $200 last month."</p>
                 </div>
             </div>
         </div>
@@ -591,53 +671,62 @@
     <section class="py-20 bg-gray-50">
         <div class="container mx-auto px-4">
             <div class="text-center mb-16">
-                <h2 class="text-3xl font-bold mb-4" data-i18n="faq_title">Frequently Asked Questions</h2>
-                <p class="text-gray-600 max-w-2xl mx-auto" data-i18n="faq_subtitle">Common questions about Universal Music</p>
+                <h2 class="text-3xl font-bold mb-4 lang-zh">常见问题</h2>
+                <h2 class="text-3xl font-bold mb-4 lang-en">Frequently Asked Questions</h2>
+                <p class="text-gray-600 max-w-2xl mx-auto lang-zh">关于我们的音乐赚钱平台的常见问题解答</p>
+                <p class="text-gray-600 max-w-2xl mx-auto lang-en">Find answers to common questions about our music earning platform</p>
             </div>
-            <div class="max-w-3xl mx-auto">
-                <div class="mb-6 bg-white p-6 rounded-xl shadow-sm">
-                    <button class="flex justify-between items-center w-full text-left font-bold text-lg faq-btn">
-                        <span data-i18n="faq1_question">How does Universal Music work?</span>
-                        <i class="fas fa-chevron-down text-purple-600 faq-icon"></i>
+            <div class="max-w-3xl mx-auto space-y-4">
+                <div class="bg-white p-6 rounded-xl shadow-sm">
+                    <button class="faq-question w-full flex justify-between items-center text-left font-bold text-lg">
+                        <span class="lang-zh">收益系统如何运作？</span>
+                        <span class="lang-en">How does the earning system work?</span>
+                        <i class="fas fa-chevron-down transition-transform duration-300"></i>
                     </button>
-                    <div class="faq-answer mt-4 text-gray-600">
-                        <p data-i18n="faq1_answer">Universal Music partners with artists to generate revenue through advertising displayed during music playback. We share most of this revenue (70%) with our users. Simply choose your VIP level and listen to music daily to earn proportional income.</p>
+                    <div class="faq-answer mt-4 text-gray-600 lang-zh">
+                        我们的平台与音乐艺术家和广告商合作。当您听音乐时，您正在帮助推广这些艺术家和品牌。广告收入的一部分作为收益与您分享。您听的越多（在每日限制内），您赚的越多。
+                    </div>
+                    <div class="faq-answer mt-4 text-gray-600 lang-en">
+                        Our platform partners with music artists and advertisers. When you listen to music, you're helping promote these artists and brands. A portion of the advertising revenue is shared with you as earnings. The more you listen (up to daily limits), the more you earn.
                     </div>
                 </div>
-                <div class="mb-6 bg-white p-6 rounded-xl shadow-sm">
-                    <button class="flex justify-between items-center w-full text-left font-bold text-lg faq-btn">
-                        <span data-i18n="faq2_question">How are earnings calculated and paid?</span>
-                        <i class="fas fa-chevron-down text-purple-600 faq-icon"></i>
+                <div class="bg-white p-6 rounded-xl shadow-sm">
+                    <button class="faq-question w-full flex justify-between items-center text-left font-bold text-lg">
+                        <span class="lang-zh">我可以多久提现一次收益？</span>
+                        <span class="lang-en">How often can I withdraw my earnings?</span>
+                        <i class="fas fa-chevron-down transition-transform duration-300"></i>
                     </button>
-                    <div class="faq-answer mt-4 text-gray-600">
-                        <p data-i18n="faq2_answer">Earnings are calculated per minute, with different rates for each VIP level (e.g., 1%-3% for VIP1, 4%-6% for VIP4). Earnings are settled daily and can be withdrawn once you reach $100, with processing completed within 1-3 business days.</p>
+                    <div class="faq-answer mt-4 text-gray-600 lang-zh">
+                        当您的余额达到最低提现金额10美元时，您可以随时提现。提现将在1-3个工作日内处理。VIP会员享有更快的提现处理时间。
+                    </div>
+                    <div class="faq-answer mt-4 text-gray-600 lang-en">
+                        You can withdraw your earnings anytime your balance reaches the minimum withdrawal amount of $10. Withdrawals are processed within 1-3 business days. VIP members enjoy faster withdrawal processing times.
                     </div>
                 </div>
-                <div class="mb-6 bg-white p-6 rounded-xl shadow-sm">
-                    <button class="flex justify-between items-center w-full text-left font-bold text-lg faq-btn">
-                        <span data-i18n="faq3_question">Why is VIP membership paid?</span>
-                        <i class="fas fa-chevron-down text-purple-600 faq-icon"></i>
+                <div class="bg-white p-6 rounded-xl shadow-sm">
+                    <button class="faq-question w-full flex justify-between items-center text-left font-bold text-lg">
+                        <span class="lang-zh">我可以赚多少钱有限制吗？</span>
+                        <span class="lang-en">Is there a limit to how much I can earn?</span>
+                        <i class="fas fa-chevron-down transition-transform duration-300"></i>
                     </button>
-                    <div class="faq-answer mt-4 text-gray-600">
-                        <p data-i18n="faq3_answer">VIP fees are primarily used to acquire higher quality music licenses and advertising resources, ensuring you receive stable earnings. Higher VIP levels allow us to secure better advertising resources for you, resulting in higher earning rates.</p>
+                    <div class="faq-answer mt-4 text-gray-600 lang-zh">
+                        您的每日收益受VIP等级限制。VIP等级越高，每日收益限制越高。没有终身限制 - 通过持续使用平台，您可以随着时间的推移赚取任意金额。
+                    </div>
+                    <div class="faq-answer mt-4 text-gray-600 lang-en">
+                        Your daily earnings are limited by your VIP level. Higher VIP levels have higher daily earning limits. There's no lifetime limit - you can earn as much as you want over time by consistently using the platform.
                     </div>
                 </div>
-                <div class="mb-6 bg-white p-6 rounded-xl shadow-sm">
-                    <button class="flex justify-between items-center w-full text-left font-bold text-lg faq-btn">
-                        <span data-i18n="faq4_question">How are earnings verified?</span>
-                        <i class="fas fa-chevron-down text-purple-600 faq-icon"></i>
+                <div class="bg-white p-6 rounded-xl shadow-sm">
+                    <button class="faq-question w-full flex justify-between items-center text-left font-bold text-lg">
+                        <span class="lang-zh">我可以在多个设备上使用该应用吗？</span>
+                        <span class="lang-en">Can I use the app on multiple devices?</span>
+                        <i class="fas fa-chevron-down transition-transform duration-300"></i>
                     </button>
-                    <div class="faq-answer mt-4 text-gray-600">
-                        <p data-i18n="faq4_answer">As a music industry leader, all advertising impressions and earnings data are audited by third parties. You can view detailed earnings reports in your account, including playback duration and corresponding earnings for each song.</p>
+                    <div class="faq-answer mt-4 text-gray-600 lang-zh">
+                        是的，您可以从多个设备访问您的账户，但您一次只能在一个设备上主动听音乐。我们的系统会检测并防止来自不同设备的同步收听。
                     </div>
-                </div>
-                <div class="mb-6 bg-white p-6 rounded-xl shadow-sm">
-                    <button class="flex justify-between items-center w-full text-left font-bold text-lg faq-btn">
-                        <span data-i18n="faq5_question">Can I cancel VIP anytime?</span>
-                        <i class="fas fa-chevron-down text-purple-600 faq-icon"></i>
-                    </button>
-                    <div class="faq-answer mt-4 text-gray-600">
-                        <p data-i18n="faq5_answer">Yes, VIP subscriptions are monthly. You can cancel auto-renewal for the next month at any time. After cancellation, your account will be downgraded to standard user status without VIP earning rates, but previously earned income can still be withdrawn normally.</p>
+                    <div class="faq-answer mt-4 text-gray-600 lang-en">
+                        Yes, you can access your account from multiple devices, but you can only be actively listening on one device at a time. Our system detects and prevents simultaneous listening from different devices.
                     </div>
                 </div>
             </div>
@@ -645,273 +734,224 @@
     </section>
 
     <!-- 底部CTA -->
-    <section class="gradient-bg text-white py-16">
+    <section class="gradient-bg text-white py-20">
         <div class="container mx-auto px-4 text-center">
-            <h2 class="text-3xl font-bold mb-6" data-i18n="cta_title">Ready to Start Your Music Earning Journey?</h2>
-            <p class="text-xl mb-8 max-w-2xl mx-auto" data-i18n="cta_subtitle">Register now, choose your VIP level, and start earning today!</p>
-            <button class="bg-white text-purple-600 px-8 py-4 rounded-full font-bold text-lg hover:bg-gray-100 transition shadow-lg" data-i18n="cta_button">
-                Register Now <i class="fas fa-arrow-right ml-2"></i>
-            </button>
+            <h2 class="text-3xl md:text-4xl font-bold mb-6 lang-zh">准备好开始赚钱了吗？</h2>
+            <h2 class="text-3xl md:text-4xl font-bold mb-6 lang-en">Ready to Start Earning?</h2>
+            <p class="text-xl mb-8 max-w-2xl mx-auto lang-zh">加入数千名在享受喜爱的音乐的同时赚钱的用户</p>
+            <p class="text-xl mb-8 max-w-2xl mx-auto lang-en">Join thousands of users earning money while enjoying their favorite music</p>
+            <div class="flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-4">
+                <a href="https://universalmusic.pro/" class="bg-white text-purple-600 px-8 py-4 rounded-full font-bold hover:bg-gray-100 transition text-lg lang-zh">
+                    立即开始 <i class="fas fa-arrow-right ml-2"></i>
+                </a>
+                <a href="https://universalmusic.pro/" class="bg-white text-purple-600 px-8 py-4 rounded-full font-bold hover:bg-gray-100 transition text-lg lang-en">
+                    Get Started <i class="fas fa-arrow-right ml-2"></i>
+                </a>
+                <button class="bg-transparent border-2 border-white text-white px-8 py-4 rounded-full font-bold hover:bg-white hover:text-purple-600 transition text-lg lang-zh">
+                    了解更多
+                </button>
+                <button class="bg-transparent border-2 border-white text-white px-8 py-4 rounded-full font-bold hover:bg-white hover:text-purple-600 transition text-lg lang-en">
+                    Learn More
+                </button>
+            </div>
         </div>
     </section>
 
     <!-- 页脚 -->
-    <footer class="bg-gray-900 text-gray-400 py-12">
+    <footer class="bg-gray-900 text-gray-300 py-12">
         <div class="container mx-auto px-4">
-            <div class="grid md:grid-cols-4 gap-8 mb-8">
+            <div class="grid md:grid-cols-4 gap-8">
                 <div>
                     <div class="flex items-center space-x-2 mb-4">
                         <i class="fas fa-music text-2xl text-purple-500"></i>
                         <span class="text-xl font-bold text-white">Universal Music</span>
                     </div>
-                    <p class="mb-4" data-i18n="footer_description">The world's leading music listening earning platform.</p>
+                    <p class="mb-4 lang-zh">边听音乐边赚钱。环球音乐集团官方合作伙伴。</p>
+                    <p class="mb-4 lang-en">Earn money while listening to your favorite music. Official partner of Universal Music Group.</p>
                     <div class="flex space-x-4">
-                        <a href="#" class="text-gray-400 hover:text-white"><i class="fab fa-facebook-f"></i></a>
-                        <a href="#" class="text-gray-400 hover:text-white"><i class="fab fa-twitter"></i></a>
-                        <act href="#" class="text-gray-400 hover:text-white"><i class="fab fa-instagram"></i></a>
-                        <a href="#" class="text-gray-400 hover:text-white"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="#" class="text-gray-300 hover:text-white"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="text-gray-300 hover:text-white"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="text-gray-300 hover:text-white"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="text-gray-300 hover:text-white"><i class="fab fa-linkedin-in"></i></a>
                     </div>
                 </div>
                 <div>
-                    <h4 class="text-white font-bold mb-4" data-i18n="footer_quick_links">Quick Links</h4>
+                    <h4 class="text-white text-lg font-bold mb-4 lang-zh">快速链接</h4>
+                    <h4 class="text-white text-lg font-bold mb-4 lang-en">Quick Links</h4>
                     <ul class="space-y-2">
-                        <li><a href="#" class="hover:text-white" data-i18n="home">Home</a></li>
-                        <li><a href="#how-it-works" class="hover:text-white" data-i18n="how_it_works">How It Works</a></li>
-                        <li><a href="#vip-levels" class="hover:text-white" data-i18n="vip_levels">VIP Levels</a></li>
-                        <li><a href="#testimonials" class="hover:text-white" data-i18n="testimonials">Testimonials</a></li>
-                        <li><a href="#" class="hover:text-white" data-i18n="blog">Blog</a></li>
+                        <li><a href="#home" class="hover:text-white lang-zh">首页</a></li>
+                        <li><a href="#home" class="hover:text-white lang-en">Home</a></li>
+                        <li><a href="#how-it-works" class="hover:text-white lang-zh">工作原理</a></li>
+                        <li><a href="#how-it-works" class="hover:text-white lang-en">How It Works</a></li>
+                        <li><a href="#vip-levels" class="hover:text-white lang-zh">VIP等级</a></li>
+                        <li><a href="#vip-levels" class="hover:text-white lang-en">VIP Levels</a></li>
+                        <li><a href="#testimonials" class="hover:text-white lang-zh">用户评价</a></li>
+                        <li><a href="#testimonials" class="hover:text-white lang-en">Testimonials</a></li>
+                        <li><a href="#" class="hover:text-white lang-zh">博客</a></li>
+                        <li><a href="#" class="hover:text-white lang-en">Blog</a></li>
                     </ul>
                 </div>
                 <div>
-                    <h4 class="text-white font-bold mb-4" data-i18n="footer_support">Support</h4>
+                    <h4 class="text-white text-lg font-bold mb-4 lang-zh">法律</h4>
+                    <h4 class="text-white text-lg font-bold mb-4 lang-en">Legal</h4>
                     <ul class="space-y-2">
-                        <li><a href="#" class="hover:text-white" data-i18n="help_center">Help Center</a></li>
-                        <li><a href="#" class="hover:text-white" data-i18n="contact_us">Contact Us</a></li>
-                        <li><a href="#" class="hover:text-white" data-i18n="privacy_policy">Privacy Policy</a></li>
-                        <li><a href="#" class="hover:text-white" data-i18n="terms_of_service">Terms of Service</a></li>
-                        <li><a href="#" class="hover:text-white" data-i18n="faq">FAQ</a></li>
+                        <li><a href="#" class="hover:text-white lang-zh">隐私政策</a></li>
+                        <li><a href="#" class="hover:text-white lang-en">Privacy Policy</a></li>
+                        <li><a href="#" class="hover:text-white lang-zh">服务条款</a></li>
+                        <li><a href="#" class="hover:text-white lang-en">Terms of Service</a></li>
+                        <li><a href="#" class="hover:text-white lang-zh">Cookie政策</a></li>
+                        <li><a href="#" class="hover:text-white lang-en">Cookie Policy</a></li>
+                        <li><a href="#" class="hover:text-white lang-zh">退款政策</a></li>
+                        <li><a href="#" class="hover:text-white lang-en">Refund Policy</a></li>
                     </ul>
                 </div>
                 <div>
-                    <h4 class="text-white font-bold mb-4" data-i18n="footer_contact">Contact Us</h4>
+                    <h4 class="text-white text-lg font-bold mb-4 lang-zh">联系我们</h4>
+                    <h4 class="text-white text-lg font-bold mb-4 lang-en">Contact Us</h4>
                     <ul class="space-y-2">
                         <li class="flex items-center">
-                            <i class="fas fa-map-marker-alt mr-2"></i>
-                            <span data-i18n="footer_address">Universal Music Building, Pudong, Shanghai</span>
-                        </li>
-                        <li class="flex items-center">
-                            <i class="fas fa-phone-alt mr-2"></i>
-                            <span>400-123-4567</span>
-                        </li>
-                        <li class="flex items-center">
-                            <i class="fas fa-envelope mr-2"></i>
+                            <i class="fas fa-envelope mr-2 text-purple-500"></i>
                             <span>support@universalmusic.com</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-phone-alt mr-2 text-purple-500"></i>
+                            <span>+1 (555) 123-4567</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-map-marker-alt mr-2 text-purple-500"></i>
+                            <span class="lang-zh">123 音乐大道, 洛杉矶, 加州</span>
+                            <span class="lang-en">123 Music Ave, Los Angeles, CA</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-comment-dots mr-2 text-purple-500"></i>
+                            <a href="https://a.syndus.xyz/chatlink.html?language=en" class="hover:text-white lang-zh">在线客服</a>
+                            <a href="https://a.syndus.xyz/chatlink.html?language=en" class="hover:text-white lang-en">Live Chat</a>
                         </li>
                     </ul>
                 </div>
             </div>
-            <div class="pt-8 border-t border-gray-800 text-sm text-center">
-                <p data-i18n="footer_copyright">© 2023 Universal Music. All Rights Reserved.</p>
+            <div class="border-t border-gray-800 mt-12 pt-8 text-center">
+                <p class="lang-zh">© 2023 Universal Music。保留所有权利。</p>
+                <p class="lang-en">© 2023 Universal Music. All rights reserved.</p>
             </div>
         </div>
     </footer>
 
     <!-- 浮动按钮 -->
-    <button class="floating-btn bg-purple-600 text-white w-16 h-16 rounded-full flex items-center justify-center hover:bg-purple-700 transition">
-        <i class="fas fa-headphones text-2xl"></i>
-    </button>
+    <a href="https://a.syndus.xyz/chatlink.html?language=en" class="floating-btn bg-purple-600 text-white w-14 h-14 rounded-full flex items-center justify-center hover:bg-purple-700 transition">
+        <i class="fas fa-question text-xl"></i>
+    </a>
 
     <script>
-        // 多语言支持
-        const translations = {
-            'zh-CN': {
-                'home': '首页',
-                'how_it_works': '如何赚钱',
-                'vip_levels': 'VIP等级',
-                'testimonials': '用户评价',
-                'login': '登录',
-                'register': '注册',
-                'hero_title': '听你喜欢的音乐，轻松赚钱',
-                'hero_subtitle': '每天只需听音乐30分钟，最高可赚取100元！环球音乐集团官方合作伙伴。',
-                'get_started': '立即开始',
-                'watch_video': '观看视频',
-                'users_joined': '已有 <span class="font-bold">12,345+</span> 用户加入',
-                'earning_rate': '正在赚取: ¥0.25/分钟',
-                'partners_title': '环球音乐集团官方合作伙伴',
-                'how_it_works_title': '简单三步，开始赚钱',
-                'how_it_works_subtitle': 'MusicEarn与环球音乐集团合作，通过广告收入分成，让您听音乐的同时获得收益',
-                'step1_title': '1. 注册账户',
-                'step1_description': '快速注册，无需复杂验证，立即开始您的音乐赚钱之旅',
-                'step2_title': '2. 选择VIP等级',
-                'step2_description': '根据您的预算选择VIP等级，等级越高收益比例越大',
-                'step3_title': '3. 听音乐赚钱',
-                'step3_description': '每天听音乐30分钟，轻松赚取收益，随时可提现',
-                'vip_levels_title': '选择您的VIP等级',
-                'vip_levels_subtitle': '升级VIP等级可大幅提高您的收益比例，享受更多特权',
-                'vip1_level': '入门级',
-                'recommended': '推荐',
-                'vip1_return': '收益比例: 1% - 3%',
-                'daily_tasks': '每日任务上限: 20单',
-                'auto_return': '系统自动返还本金收益',
-                'basic_library': '基础歌曲库',
-                'no_support': '无专属客服',
-                'choose_vip1': '选择VIP1',
-                'vip2_level': '进阶版',
-                'great_value': '超值',
-                'vip2_return': '收益比例: 2% - 4%',
-                'extended_library': '扩展歌曲库',
-                'priority_support': '优先客服',
-                'choose_vip2': '选择VIP2',
-                'vip3_level': '专业版',
-                'popular': '热门',
-                'vip3_return': '收益比例: 3% - 5%',
-                'team_required': '+团队人数10',
-                'premium_library': '高级歌曲库',
-                'dedicated_support': '专属客服',
-                'choose_vip3': '选择VIP3',
-                'vip4_level': '尊享版',
-                'exclusive': '尊贵',
-                'vip4_return': '收益比例: 4% - 6%',
-                'platinum_library': '白金歌曲库',
-                '24h_support': '24小时专属客服',
-                'choose_vip4': '选择VIP4',
-                'earnings_calculator': '收益计算器',
-                'select_vip_level': '选择VIP等级',
-                'daily_investment': '每日投资金额(USD)',
-                'estimated_earnings': '预计月收益',
-                'calculator_note': '* 计算结果仅供参考，实际收益可能因市场情况等因素有所波动。环球音乐集团不保证最低收益。',
-                'testimonials_title': '用户评价',
-                'testimonials_subtitle': '看看我们的用户如何通过MusicEarn改变他们的生活',
-                'user1_name': '李小姐',
-                'user1_review': '"作为VIP3用户，我每天听音乐90分钟，一个月能赚1600元左右，完全覆盖了我的通勤费用！"',
-                'user1_date': '2023年6月15日',
-                'user2_name': '王先生',
-                'user2_review': '"升级到VIP4后，收益大幅提升。现在我每天听两小时音乐，月收入超过3000元，太不可思议了！"',
-                'user2_date': '2023年5月28日',
-                'user3_name': '张女士',
-                'user3_review': '"作为音乐爱好者，既能听喜欢的歌又能赚钱，VIP2的性价比非常高，推荐给所有音乐迷！"',
-                'user3_date': '2023年7月3日',
-                'faq_title': '常见问题',
-                'faq_subtitle': '关于MusicEarn的常见问题解答',
-                'faq1_question': 'MusicEarn是如何运作的？',
-                'faq1_answer': 'MusicEarn与环球音乐集团合作，通过播放音乐时展示广告来获得收入。我们将这部分收入的大部分(70%)分享给用户。您只需选择VIP等级并每天听音乐，就能获得相应比例的收益。',
-                'faq2_question': '收益如何计算和支付？',
-                'faq2_answer': '收益按分钟计算，不同VIP等级有不同的收益比例。例如VIP1为1%-3%，VIP4为4%-6%。收益每日结算，满100元即可提现，提现将在1-3个工作日内处理完成。',
-                'faq3_question': '为什么需要付费成为VIP？',
-                'faq3_answer': 'VIP费用主要用于获取更高质量的音乐版权和广告资源，确保您能持续获得稳定的收益。VIP等级越高，我们能为您争取的优质广告资源越多，因此您的收益比例也越高。',
-                'faq4_question': '如何确保收益的真实性？',
-                'faq4_answer': '作为环球音乐集团的合作伙伴，所有广告展示和收益数据都经过第三方审计。您可以在个人中心查看详细的收益报表，包括每首歌曲的播放时长和对应收益。',
-                'faq5_question': '可以随时取消VIP吗？',
-                'faq5_answer': '是的，VIP订阅按月计算，您可以随时取消下月的自动续费。取消后您的账户将降级为普通用户，不再享受VIP收益比例，但已获得的收益仍可正常提现。',
-                'cta_title': '准备好开始您的音乐赚钱之旅了吗？',
-                'cta_subtitle': '立即注册，选择适合您的VIP等级，今天就开始赚钱！',
-                'cta_button': '立即注册',
-                'footer_description': '全球领先的听音乐赚钱平台，环球音乐集团官方合作伙伴。',
-                'footer_quick_links': '快速链接',
-                'footer_support': '支持',
-                'footer_contact': '联系我们',
-                'footer_address': '上海市浦东新区环球音乐大厦',
-                'footer_copyright': '© 2023 MusicEarn. 保留所有权利。环球音乐集团合作伙伴。',
-                'help_center': '帮助中心',
-                'contact_us': '联系我们',
-                'privacy_policy': '隐私政策',
-                'terms_of_service': '服务条款',
-                'faq': '常见问题',
-                'blog': '博客'
-            },
-            'en-US': {
-                'home': 'Home',
-                'how_it_works': 'How It Works',
-                'vip_levels': 'VIP Levels',
-                'testimonials': 'Testimonials',
-                'login': 'Login',
-                'register': 'Register',
-                'hero_title': 'Earn Money While Listening to Your Favorite Music',
-                'hero_subtitle': 'Just 30 minutes of music listening per day can earn you up to $100! Official partner of Universal Music Group.',
-                'get_started': 'Get Started',
-                'watch_video': 'Watch Video',
-                'users_joined': 'Over <span class="font-bold">12,345+</span> users joined',
-                'earning_rate': 'Earning: $0.25/min',
-                'partners_title': 'Official Partner of Universal Music Group',
-                'how_it_works_title': 'Earn Money in 3 Simple Steps',
-                'how_it_works_subtitle': 'Universal Music partners with artists to share advertising revenue with you while you listen to music',
-                'step1_title': '1. Create Account',
-                'step1_description': 'Quick registration, no complex verification, start your music earning journey immediately',
-                'step2_title': '2. Choose VIP Level',
-                'step2_description': 'Select VIP level based on your budget, higher levels offer greater earning rates',
-                'step3_title': '3. Listen & Earn',
-                'step3_description': 'Listen to music for 30 minutes daily, earn easily, withdraw anytime',
-                'vip_levels_title': 'Choose Your VIP Level',
-                'vip_levels_subtitle': 'Upgrade VIP level to significantly increase your earning rate and enjoy more privileges',
-                'vip1_level': 'Starter',
-                'recommended': 'Recommended',
-                'vip1_return': 'Earning rate: 1% - 3%',
-                'daily_tasks': 'Daily task limit: 20',
-                'auto_return': 'Automatic return of principal and earnings',
-                'basic_library': 'Basic music library',
-                'no_support': 'No dedicated support',
-                'choose_vip1': 'Choose VIP1',
-                'vip2_level': 'Advanced',
-                'great_value': 'Great Value',
-                'vip2_return': 'Earning rate: 2% - 4%',
-                'extended_library': 'Extended music library',
-                'priority_support': 'Priority support',
-                'choose_vip2': 'Choose VIP2',
-                'vip3_level': 'Professional',
-                'popular': 'Popular',
-                'vip3_return': 'Earning rate: 3% - 5%',
-                'team_required': '+10 team members',
-                'premium_library': 'Premium music library',
-                'dedicated_support': 'Dedicated support',
-                'choose_vip3': 'Choose VIP3',
-                'vip4_level': 'Exclusive',
-                'exclusive': 'Exclusive',
-                'vip4_return': 'Earning rate: 4% - 6%',
-                'platinum_library': 'Platinum music library',
-                '24h_support': '24/7 dedicated support',
-                'choose_vip4': 'Choose VIP4',
-                'earnings_calculator': 'Earnings Calculator',
-                'select_vip_level': 'Select VIP Level',
-                'daily_investment': 'Daily Investment (USD)',
-                'estimated_earnings': 'Estimated Monthly Earnings',
-                'calculator_note': '* Calculation results are for reference only. Actual earnings may fluctuate due to market conditions. Universal Music does not guarantee minimum earnings.',
-                'testimonials_title': 'User Testimonials',
-                'testimonials_subtitle': 'See how our users are changing their lives with Universal Music',
-                'user1_name': 'Ms. Li',
-                'user1_review': '"As a VIP3 user, I listen to music for 90 minutes daily and earn about $1600 per month, which completely covers my commuting expenses!"',
-                'user1_date': 'June 15, 2023',
-                'user2_name': 'Mr. Wang',
-                'user2_review': '"After upgrading to VIP4, my earnings increased significantly. Now I listen to music for 2 hours daily and earn over $3000 monthly - incredible!"',
-                'user2_date': 'May 28, 2023',
-                'user3_name': 'Ms. Zhang',
-                'user3_review': '"As a music lover, being able to earn while listening to my favorite songs is amazing. VIP2 offers great value for money - highly recommended to all music fans!"',
-                'user3_date': 'July 3, 2023',
-                'faq_title': 'Frequently Asked Questions',
-                'faq_subtitle': 'Common questions about Universal Music',
-                'faq1_question': 'How does Universal Music work?',
-                'faq1_answer': 'Universal Music partners with artists to generate revenue through advertising displayed during music playback. We share most of this revenue (70%) with our users. Simply choose your VIP level and listen to music daily to earn proportional income.',
-                'faq2_question': 'How are earnings calculated and paid?',
-                'faq2_answer': 'Earnings are calculated per minute, with different rates for each VIP level (e.g., 1%-3% for VIP1, 4%-6% for VIP4). Earnings are settled daily and can be withdrawn once you reach $100, with processing completed within 1-3 business days.',
-                'faq3_question': 'Why is VIP membership paid?',
-                'faq3_answer': 'VIP fees are primarily used to acquire higher quality music licenses and advertising resources, ensuring you receive stable earnings. Higher VIP levels allow us to secure better advertising resources for you, resulting in higher earning rates.',
-                'faq4_question': 'How are earnings verified?',
-                'faq4_answer': 'As a music industry leader, all advertising impressions and earnings data are audited by third parties. You can view detailed earnings reports in your account, including playback duration and corresponding earnings for each song.',
-                'faq5_question': 'Can I cancel VIP anytime?',
-                'faq5_answer': 'Yes, VIP subscriptions are monthly. You can cancel auto-renewal for the next month at any time. After cancellation, your account will be downgraded to standard user status without VIP earning rates, but previously earned income can still be withdrawn normally.',
-                'cta_title': 'Ready to Start Your Music Earning Journey?',
-                'cta_subtitle': 'Register now, choose your VIP level, and start earning today!',
-                'cta_button': 'Register Now',
-                'footer_description': 'The world\'s leading music listening earning platform.',
-                'footer_quick_links': 'Quick Links',
-                'footer_support': 'Support',
-                'footer_contact': 'Contact Us',
-                'footer_address': 'Universal Music Building, Pudong, Shanghai',
-                'footer_copyright': '© 2023 Universal Music. All Rights Reserved.',
-                'help_center': 'Help Center',
-                'contact_us': 'Contact Us',
-                'privacy_policy': 'Privacy Policy',
-                'terms_of_service': 'Terms of Service',
-                'faq': 'FAQ',
-                'blog': 'Blog'
-            },
- 
+        // 移动端菜单切换
+        document.getElementById('mobile-menu-btn').addEventListener('click', function() {
+            document.getElementById('mobile-menu').classList.toggle('show');
+        });
+
+        // 音乐播放器功能
+        const playBtn = document.getElementById('play-btn');
+        const playIcon = document.getElementById('play-icon');
+        const progress = document.getElementById('progress');
+        let isPlaying = false;
+        let progressInterval;
+
+        playBtn.addEventListener('click', function() {
+            isPlaying = !isPlaying;
+            
+            if(isPlaying) {
+                playIcon.classList.remove('fa-play');
+                playIcon.classList.add('fa-pause');
+                
+                let width = 0;
+                progressInterval = setInterval(function() {
+                    if(width >= 100) {
+                        clearInterval(progressInterval);
+                        isPlaying = false;
+                        playIcon.classList.remove('fa-pause');
+                        playIcon.classList.add('fa-play');
+                    } else {
+                        width++;
+                        progress.style.width = width + '%';
+                    }
+                }, 100);
+            } else {
+                playIcon.classList.remove('fa-pause');
+                playIcon.classList.add('fa-play');
+                clearInterval(progressInterval);
+            }
+        });
+
+        // FAQ切换功能
+        const faqQuestions = document.querySelectorAll('.faq-question');
+        faqQuestions.forEach(question => {
+            question.addEventListener('click', function() {
+                const answer = this.nextElementSibling;
+                const icon = this.querySelector('i');
+                
+                answer.classList.toggle('show');
+                icon.classList.toggle('rotate-180');
+            });
+        });
+
+        // 平滑滚动
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                const targetElement = document.querySelector(targetId);
+                
+                if(targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                    
+                    // 关闭移动菜单（如果打开）
+                    document.getElementById('mobile-menu').classList.remove('show');
+                }
+            });
+        });
+
+        // 语言切换功能
+        const languageOptions = document.querySelectorAll('.language-option');
+        
+        languageOptions.forEach(option => {
+            option.addEventListener('click', function(e) {
+                e.preventDefault();
+                const lang = this.getAttribute('data-lang');
+                
+                // 更新页面语言属性
+                document.body.setAttribute('lang', lang);
+                
+                // 更新当前显示的语言
+                const flagImg = document.querySelector('#language-btn img');
+                if(lang === 'zh-CN') {
+                    flagImg.src = 'https://flagcdn.com/w20/cn.png';
+                } else {
+                    flagImg.src = 'https://flagcdn.com/w20/us.png';
+                }
+                
+                // 关闭下拉菜单
+                document.getElementById('language-dropdown').style.display = 'none';
+            });
+        });
+
+        // 防止点击语言按钮时菜单立即关闭
+        document.getElementById('language-btn').addEventListener('click', function(e) {
+            e.stopPropagation();
+            const dropdown = document.getElementById('language-dropdown');
+            if(dropdown.style.display === 'block') {
+                dropdown.style.display = 'none';
+            } else {
+                dropdown.style.display = 'block';
+            }
+        });
+
+        // 点击页面其他位置关闭语言下拉菜单
+        document.addEventListener('click', function() {
+            document.getElementById('language-dropdown').style.display = 'none';
+        });
+    </script>
+</body>
+</html>
